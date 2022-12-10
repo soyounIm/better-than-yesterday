@@ -1,0 +1,12 @@
+<configuration>
+<property>
+	<name>mapred.job.tracker</name>
+	<value>yarn</value>
+	<description> JobTracker로 YARN을 설정 </description>
+</property>
+<property>
+	<name>mapreduce.framwork.name</name>
+	<value>yarn</value>
+	<description> 맵리듀스 잡을 yarn모드로 실행 </description>
+</property>
+</configuration>

@@ -1,0 +1,32 @@
+<configuration>
+<property>
+	<name>yarn.nodemanager.aux-services</name>
+	<value>mapreduce_shuffle</value>
+	<description> 노드매니저간의 서비스 제공을 위해 사용할 AuxiliaryService 명칭 </description>
+</property>
+<property>
+	<name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+	<value>org.apache.hadoop.mapred.ShuffleHandler</value>
+	<description>aux-services에 설정할 서비스를 구현한 클래스</description>
+</property>
+<property>
+	<name>yarn.nodemanager.local-dirs</name>
+	<value>/usr/local/hadoop/yarn/data</value>
+	<description> 노드매니저가 애플리케이션을 실행할때 필요한 파일을 저장하는 로컬 파일 시스템 경로</description>
+</property>
+<property>
+	<name>yarn.resourcemanager.fs.state-store.uri</name>
+	<value>/usr/local/hadoop/yarn/data</value>
+	<description> 리소스매니저의 상태 정보를 저장할 로컬 파일 시스템 경로 </description>
+</property>
+<property>
+	<name>yarn.resourcemanager.hostname</name>
+	<value>namenode</value>
+	<description> 리소스매니저의 호스트명 </description>
+</property>
+<property>
+	<name>yarn.web-proxy.address</name>
+	<value>namenode:8089</value>
+	<description> 웹 프록시 서버(애플리케이션 마스터에 대한 사용자 접근 제어) </description>
+</property>
+</configuration>

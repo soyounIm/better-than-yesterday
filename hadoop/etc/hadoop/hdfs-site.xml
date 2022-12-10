@@ -1,0 +1,37 @@
+<configuration>
+<property>
+	<name>dfs.replication</name>
+	<value>3</value>
+	<description>HDFS의 복제본 설정</description>
+</property>
+
+<property>
+	<name>dfs.namenode.name.dir</name>
+	<value>/usr/local/hadoop/hdfs/data</value>
+	<description> 파일 시스템 이미지를 저장할 로컬 파일 시스템 경로 </description>
+</property>
+
+<property>
+	<name>dfs.namenode.checkpoint.dir</name>
+	<value>/usr/local/hadoop/hdfs/data</value>
+	<description> 보조네임노드의 체크포인팅 데이터를 저장할 로컬 파일 시스템 경로 </description>
+</property>
+
+<property>
+	<name>dfs.datanode.data.dir</name>
+	<value>/usr/local/hadoop/hdfs/data</value>
+	<description> HDFS 데이터 블록을 저장할 로컬 파일 시스템 경로 </description>
+</property>
+
+<property>
+	<name>dfs.http.address</name>
+	<value>namenode:50070</value>
+	<description>네임노드용 웹서버의 주소값</description>
+</property>
+
+<property>
+	<name>dfs.secondary.http.address</name>
+	<value>secondnm:50090</value>
+	<description>보조네임노드용 웹서버 주소값</description>
+</property>
+</configuration>
