@@ -33,6 +33,11 @@ class HdfsCommand:
     self._args.extend([path])
     return self
 
+  def test(self, path:str):
+    self._command.extend(['hdfs', 'dfs', '-test'])
+    self._args.extend([path])
+    return self
+
   def count(self, path:str):
     self._command.extend(['hdfs', 'dfs', '-count'])
     self._args.extend([path])
@@ -76,19 +81,23 @@ if __name__ == "__main__":
   hdfs = HdfsCommand()
 
   # ls usage
-  #print(hdfs.ls('/data/20230501').run())
+  #print(hdfs.ls('hdfs path').run())
 
   # distcp
-#  print(hdfs.distcp(source='/data/20230501', target='/data_test/20230501').options(['-skipcrccheck']).run())
+#  print(hdfs.distcp(source='hdfs path', target='hdfs path').options(['-skipcrccheck']).run())
 
   # get
-#  os.makedirs('local/path/data', exist_ok=True) 
-#  print(hdfs.get(source='/data/20230501', target=target_fs_path,).run())
+#  os.makedirs(target_fs_path, exist_ok=True) 
+#  print(hdfs.get(source='source path', target=target_fs_path,).run())
 
   # count
-  #print(hdfs.count(path='/data/20230501').options(['-h']).run())
+  #print(hdfs.count(path='path').options(['-h']).run())
 
-  ret = hdfs.count(path='/data/20230501').run()
-  print(f'{ret.result}')
+  #ret = hdfs.count(path='path').run()
+  #print(f'{ret.result}')
+
+  ret = hdfs.test(path='path').options(['-s']).run()
+  print(f'{ret.isSuccess}')
+
 
 

@@ -75,11 +75,11 @@ if __name__ == "__main__":
   # bigdata_s3
   with AwsCommand('default') as aws:
     #aws.s3.show_buckets()
-    aws.s3.bucket('my-project','data')
+    aws.s3.bucket('bucket name','prefix')
     #aws.show_objects()
-    #if aws.upload_files('/data/test.txt', 'data/test.txt') is False:
+    #if aws.upload_files('local file', 's3 file') is False:
     #  print('Failed uploading files!!')
 
-    print('is_empty=', aws.is_empty(prefix='data'))
-    #print(aws.get_info('data/20230501'))
-    #aws.delete_files('data/20230501')
+    print('is_empty=', aws.is_empty(prefix='prefix'))
+    #print(aws.get_info('path'))
+    #aws.delete_files('path')
