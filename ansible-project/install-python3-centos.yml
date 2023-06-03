@@ -1,0 +1,68 @@
+---
+- name: Install python3.8
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    tmp_path: /home/imsoyoun/tmp
+
+  tasks:
+    - name: check alt python version
+      shell: /usr/local/bin/python3.8 --version
+      register: python3_version
+      ignore_errors: yes  # If not installed
+      tags:
+        - python-alt
+
+    - name: Install a list of packages
+      run_once: true
+      become: true
+      yum:
+        name:
+          - gcc
+          - openssl-devel
+          - bzip2-devel
+          - libffi-devel
+        state: present
+      tags:
+        - python-alt
+
+    - name: Create tmp Folder
+      run_once: true
+      file:
+        path: "{{ tmp_path }}"
+        state: directory
+      tags:
+        - python-alt
+
+    - name: unarchive Python-3.8.9
+      run_once: true
+      unarchive:
+        src: https://www.python.org/ftp/python/3.8.9/Python-3.8.9.tgz
+        dest: "{{ tmp_path }}"
+        remote_src: yes
+        keep_newer: yes
+      when: python3_version['stderr'] != 'Python 3.8.9'
+      tags:
+        - python-alt
+
+    - name: make install alt python3
+      become: yes
+      command: "{{ item }}"
+      args:
+        chdir: "{{ tmp_path }}/Python-3.8.9"
+      with_items:
+        - "./configure"
+        - "make -j 4"
+        - "make install"
+      tags:
+        - python-build
+
+    - name: Install python3-pip
+      become: yes
+      yum:
+        name:
+          - python3-pip
+        state: present
+      tags:
+        - python-pip

@@ -1,0 +1,64 @@
+---
+- name: Install Airflow
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    tmp_path: /home/imsoyoun/tmp
+    base_path: /home/imsoyoun
+
+  tasks:
+    - name: download and unarchive sqlite3
+      run_once: true
+      unarchive:
+        src: https://www.sqlite.org/2023/sqlite-autoconf-3420000.tar.gz
+        dest: "{{ tmp_path }}"
+        remote_src: yes
+        keep_newer: yes
+      tags:
+        - sqlite
+
+    - name: make install sqlite3
+      run_once: true
+      become: yes
+      command: "{{ item }}"
+      args:
+        chdir: "{{ tmp_path }}/sqlite-autoconf-3420000"
+      with_items:
+        - "./configure --enable-loadable-sqlite-extensions"
+        - "make -j 4"
+        - "make -j 4 install"
+      tags:
+        - sqlite-build
+
+    - name: which python3
+      command: which python3
+      register: python3_path
+
+    - name: output python3 path
+      debug:
+        msg: "{{ python3_path.stdout }}"
+
+    - name: Create airflow Folder
+      run_once: true
+      file:
+        path: "{{ base_path }}/airflow"
+        state: directory
+
+    - name: install airlfow
+      run_once: true
+      args:
+        chdir: "{{ base_path }}/airflow"
+      command: "{{ item }}"
+      with_items:
+        - "python3 -m pip install --upgrade pip"
+        - "pip3 install apache-airflow==2.6.1"
+        - "pip3 install --upgrade urllib3==1.26.15"
+      tags:
+        - airflow-install
+      
+   - name: airflow init
+      run_once: true
+      command: airflow db init
+      tags:
+        - airflow-init

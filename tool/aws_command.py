@@ -72,7 +72,6 @@ class AwsCommand:
 
 if __name__ == "__main__":
 
-  # bigdata_s3
   with AwsCommand('default') as aws:
     #aws.s3.show_buckets()
     aws.s3.bucket('bucket name','prefix')
